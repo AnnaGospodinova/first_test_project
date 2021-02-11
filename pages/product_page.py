@@ -11,7 +11,7 @@ class PageObject(BasePage):
 	def should_be_message_about_adding(self):
 		product_name = self.browser.find_element(*PageObjectLocators.PRODUCT_NAME).text
 		message_about_adding = self.browser.find_element(*PageObjectLocators.MESSAGE_ABOUT_ADDING).text
-		assert product_name in message_about_adding, "No product name in message"
+		assert product_name == message_about_adding, "No product name in message"
 
 	def should_be_true_total_price(self):
 		product_price = self.browser.find_element(*PageObjectLocators.PRODUCT_PRICE).text
