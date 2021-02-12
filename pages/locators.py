@@ -13,3 +13,4 @@ class PageObjectLocators():
 	TOTAL_PRICE_IN_MESSAGE_ABOUT_TOTAL_PRICE = (By.CSS_SELECTOR, ".alert-info .alertinner strong")
 	PRODUCT_NAME = (By.CSS_SELECTOR, ".product_main h1")
 	PRODUCT_PRICE = (By.CSS_SELECTOR, ".product_main .price_color")
+	SUCCESS_MESSAGE = (By.CSS_SELECTOR, "#messages .alert-success .alertinner")

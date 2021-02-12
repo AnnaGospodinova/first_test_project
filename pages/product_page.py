@@ -17,5 +17,11 @@ class PageObject(BasePage):
 		product_price = self.browser.find_element(*PageObjectLocators.PRODUCT_PRICE).text
 		total_price = self.browser.find_element(*PageObjectLocators.TOTAL_PRICE_IN_MESSAGE_ABOUT_TOTAL_PRICE).text
 		assert product_price == total_price, "Total price is not like product price"
+
+	def should_not_be_success_message(self):
+		assert self.is_not_element_present(*PageObjectLocators.SUCCESS_MESSAGE), "Success message is presented, but should not be"
+
+	def should_will_be_success_message(self):
+		assert self.is_disappeared(*PageObjectLocators.SUCCESS_MESSAGE), "Success message is not disappeared"
 	
 	
