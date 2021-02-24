@@ -3,7 +3,6 @@ from .locators import PageObjectLocators
 
 
 class PageObject(BasePage):
-
 	def add_to_basket(self):
 		add_button = self.browser.find_element(*PageObjectLocators.BUTTON_ADD_TO_BASKET)
 		add_button.click()

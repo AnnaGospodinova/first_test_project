@@ -6,6 +6,7 @@ import time
 
 
 @pytest.mark.parametrize('number', ["0", "1", "2", "3", "4", "5", "6", pytest.param ("7", marks=pytest.mark.xfail(reason="bug")), "8", "9"])
+@pytest.mark.need_review
 def test_guest_can_add_product_to_basket(browser, number):
 	link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{number}"
 	page = PageObject(browser, link)
@@ -35,30 +36,21 @@ def test_message_disappeared_after_adding_product_to_basket(browser):
 	page.add_to_basket()
 	page.should_will_be_success_message()
 
-@pytest.mark.login
-class TestLoginFromProductPage():
-	@pytest.fixture(scope="function", autouse=True)
-	def setup(self):
-		self.product = ProductFactory(title = "Best book created by robot")
-		# создаем по апи
-		self.link = self.product.link
-		yield
-		# после этого ключевого слова начинается teardown
-		# выполнится после каждого теста в классе
-		# удаляем те данные, которые мы создали 
-		self.product.delete()
+@pytest.mark.need_review
+def test_guest_should_see_login_link_on_product_page(browser):
+	link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+	page = PageObject(browser, link)
+	page.open()
+	page.should_be_login_link()
 
-	def test_guest_should_see_login_link_on_product_page(self, browser):
-		page = PageObject(browser, self.link)
-		page.open()
-		page.should_be_login_link()
+@pytest.mark.need_review
+def test_guest_can_go_to_login_page_from_product_page(browser):
+	link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+	page = PageObject(browser, link)
+	page.open()
+	page.go_to_login_page()
 
-	def test_guest_can_go_to_login_page_from_product_page(self,browser):
-		page = PageObject(browser, self.link)
-		page.open()
-		page.go_to_login_page()
-
-@pytest.mark.smoke
+@pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
 	link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
 	page = PageObject(browser, link)
@@ -68,7 +60,6 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
 	basket_page.should_be_not_element_in_basket()
 	basket_page.should_be_text_about_empty_basket()
 
-@pytest.mark.registration
 class TestUserAddToBasketFromProductPage():
 	@pytest.fixture(scope="function", autouse=True)
 	def setup(self, browser):
@@ -80,7 +71,8 @@ class TestUserAddToBasketFromProductPage():
 		page.go_to_login_page()
 		page.register_new_user(email, password)
 		page.should_be_authorized_user()	
-
+	
+	@pytest.mark.need_review
 	def test_user_can_add_product_to_basket(self, browser):
 		link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
 		page = PageObject(browser, link)
